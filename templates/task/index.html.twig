@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Görevler</h1>
+
+    <a href="{{ path('task_new') }}">Yeni Görev Ekle</a>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.title }} - {% if task.isCompleted %}Tamamlandı{% else %}Tamamlanmadı{% endif %}
+                <a href="{{ path('task_edit', {'id': task.id}) }}">Düzenle</a>
+                <form method="post" action="{{ path('task_delete', {'id': task.id}) }}" onsubmit="return confirm('Görevi silmek istediğinizden emin misiniz?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                    <button type="submit">Sil</button>
+                </form>
+                {% if not task.isCompleted %}
+                    <form method="post" action="{{ path('task_complete', {'id': task.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('complete' ~ task.id) }}">
+                        <button type="submit">Tamamla</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

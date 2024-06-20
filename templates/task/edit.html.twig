@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Görevi Düzenle</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Güncelle') }}</button>
+    {{ form_end(form) }}
+{% endblock %}
